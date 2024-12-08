@@ -1,5 +1,8 @@
 import localFont from "next/font/local";
 import "./globals.css";
+import Navbar from "@/components/Navbar";
+import { ThemeProvider } from "@/components/theme-provider";
+import { AuthContextProvider } from "../app/_utils/auth-context"; // Correct import
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -19,11 +22,21 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        suppressHydrationWarning
       >
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+          suppressHydrationWarning
+        >
+          <Navbar />
+          <AuthContextProvider>{children}</AuthContextProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
