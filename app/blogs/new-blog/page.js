@@ -1,7 +1,9 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const NewBlog = () => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     author: "",
     title: "",
@@ -38,7 +40,7 @@ const NewBlog = () => {
       if (response.ok) {
         const data = await response.json();
         console.log("Blog created:", data.id);
-        // Navigate to the blogs page
+        router.push("/blogs"); // Redirect to blog page after successful submission
       } else {
         const errorData = await response.json();
         console.error("Error:", errorData.message);
@@ -49,32 +51,84 @@ const NewBlog = () => {
   };
 
   return (
-    <div>
-      <h1>Add New Blog</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="author"
-          placeholder="Author Name"
-          value={formData.author}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          name="title"
-          placeholder="Blog Title"
-          value={formData.title}
-          onChange={handleChange}
-        />
-        <textarea
-          name="description"
-          placeholder="Description"
-          value={formData.description}
-          onChange={handleChange}
-        />
-        <input type="file" name="image" onChange={handleFileChange} />
-        <button type="submit">Submit</button>
-      </form>
+    <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-xl shadow-lg">
+        <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
+          Add New Blog
+        </h1>
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="relative">
+            <input
+              type="text"
+              name="author"
+              id="author"
+              value={formData.author}
+              onChange={handleChange}
+              className="block w-full px-4 py-3 bg-white text-gray-900 border border-gray-300 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter author name"
+            />
+            <label
+              htmlFor="author"
+              className="absolute  text-sm font-medium text-gray-500 top-0 left-2 -translate-y-1/2 bg-white px-1"
+            >
+              Author Name
+            </label>
+          </div>
+
+          <div className="relative">
+            <input
+              type="text"
+              name="title"
+              id="title"
+              value={formData.title}
+              onChange={handleChange}
+              className="block w-full px-4 py-3 bg-white text-gray-900 border border-gray-300 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter blog title"
+            />
+            <label
+              htmlFor="title"
+              className="absolute text-sm font-medium text-gray-500 top-0 left-2 -translate-y-1/2 bg-white px-1"
+            >
+              Blog Title
+            </label>
+          </div>
+
+          <div className="relative">
+            <textarea
+              name="description"
+              id="description"
+              value={formData.description}
+              onChange={handleChange}
+              rows="4"
+              className="block w-full px-4 py-3 bg-white text-gray-900 border border-gray-300 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter blog description"
+            />
+            <label
+              htmlFor="description"
+              className="absolute text-sm font-medium text-gray-500 top-0 left-2 -translate-y-1/2 bg-white px-1"
+            >
+              Description
+            </label>
+          </div>
+
+          <div className="mt-4">
+            <input
+              type="file"
+              name="image"
+              onChange={handleFileChange}
+              className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          >
+            Submit
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

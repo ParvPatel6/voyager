@@ -34,16 +34,49 @@ const BlogsPage = () => {
   return (
     <div>
       <h1>Blogs</h1>
-      <button>
-        <Link href="/blogs/new-blog">Add New Blog</Link>
-      </button>
+      <Link
+        href="/blogs/new-blog"
+        style={{
+          position: "fixed",
+          bottom: "20px",
+          right: "20px",
+          padding: "12px 24px",
+          backgroundColor: "#ffffff",
+          color: "#000000",
+          borderRadius: "8px",
+          boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+          textDecoration: "none",
+          transition: "all 0.3s ease",
+          fontSize: "16px",
+          fontWeight: "500",
+          border: "1px solid rgba(0, 0, 0, 0.1)",
+          cursor: "pointer",
+          "&:hover": {
+            transform: "translateY(-2px)",
+            boxShadow: "0 6px 16px rgba(0, 0, 0, 0.2)",
+          },
+        }}
+      >
+        Add New Blog
+      </Link>
+
       <ul>
         {blogs && blogs.length > 0 ? (
           blogs.map((blog) => (
-            <li key={blog.id}>
-              <Link href={`/blogs/${blog.id}`}>
-                <h2>{blog.title}</h2>
-                <p>{blog.description}</p>
+            <li key={blog.id} className="w-full mb-6">
+              <Link
+                href={`/blogs/${blog.id}`}
+                className="block bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
+              >
+                <div className="flex h-48">
+                  <div className="w-[35%] h-full bg-gray-200"></div>
+                  <div className="w-[65%] p-4 flex flex-col justify-between">
+                    <h2 className="text-xl font-bold text-gray-800 mb-2 line-clamp-2">
+                      {blog.title}
+                    </h2>
+                    <p className="text-sm text-gray-600">By {blog.author}</p>
+                  </div>
+                </div>
               </Link>
             </li>
           ))

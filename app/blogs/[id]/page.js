@@ -38,11 +38,25 @@ const BlogDetails = ({ params }) => {
   if (!blog) return <div>Loading...</div>;
 
   return (
-    <div>
-      <h1>{blog.title}</h1>
-      <p>By {blog.author}</p>
-      <img src={blog.img} alt={blog.title} />
-      <p>{blog.description}</p>
+    <div className="max-w-4xl mx-auto px-4 py-8">
+      <article className="prose lg:prose-xl">
+        <h1 className="text-4xl font-bold text-black dark:text-white mb-4">
+          {blog.title}
+        </h1>
+        <p className="text-black dark:text-white mb-6 text-lg">
+          By {blog.author}
+        </p>
+        <div className="relative h-[400px] mb-8 rounded-lg overflow-hidden">
+          <img
+            src={blog.img}
+            alt={blog.title}
+            className="object-cover w-full h-full"
+          />
+        </div>
+        <p className="text-black dark:text-white leading-relaxed text-lg">
+          {blog.description}
+        </p>
+      </article>
     </div>
   );
 };

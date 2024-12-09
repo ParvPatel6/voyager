@@ -36,8 +36,8 @@ const Page = () => {
 
         <div className="w-full mt-4 lg:mt-0 lg:w-1/2">
           <img
-            src="https://www.creative-tim.com/twcomponents/svg/website-designer-bro-purple.svg"
-            alt="tailwind css components"
+            src="/images/IMG_2997.jpg"
+            alt="Parv Patel"
             className="w-full h-full max-w-md mx-auto"
           />
         </div>
