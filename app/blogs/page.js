@@ -41,7 +41,7 @@ const BlogsPage = () => {
           bottom: "20px",
           right: "20px",
           padding: "12px 24px",
-          backgroundColor: "#ffffff",
+          backgroundColor: "#334155",
           color: "#000000",
           borderRadius: "8px",
           boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
@@ -49,6 +49,7 @@ const BlogsPage = () => {
           transition: "all 0.3s ease",
           fontSize: "16px",
           fontWeight: "500",
+          hover: "bg-blend-darken",
           border: "1px solid rgba(0, 0, 0, 0.1)",
           cursor: "pointer",
           "&:hover": {

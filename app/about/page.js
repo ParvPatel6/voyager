@@ -4,9 +4,9 @@ export default function About() {
       <h1 className="text-4xl font-bold mb-8">About Me</h1>
 
       <div className="space-y-4 mb-8">
-        <p className="text-lg">Hi, I'm [Parv]</p>
+        <p className="text-lg">Hi, I&apos;m [Parv]</p>
         <p className="text-lg">
-          I'm a [Your Profession] based in [Your Location]
+          I&apos;m a [Your Profession] based in [Your Location]
         </p>
         <p className="text-lg">I specialize in [Your Skills/Expertise]</p>
         <p className="text-lg">[Add more personal/professional details]</p>

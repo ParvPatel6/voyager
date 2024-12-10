@@ -48,9 +48,9 @@ const BlogDetails = ({ params }) => {
         </p>
         <div className="relative h-[400px] mb-8 rounded-lg overflow-hidden">
           <img
-            src={blog.img}
+            src={blog.image}
             alt={blog.title}
-            className="object-cover w-full h-full"
+            className="object-cover w-500 h-300"
           />
         </div>
         <p className="text-black dark:text-white leading-relaxed text-lg">
