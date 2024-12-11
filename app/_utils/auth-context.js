@@ -1,4 +1,4 @@
-"use client";
+"use client"; // Ensure this is present for client-side code
 
 import { useContext, createContext, useState, useEffect } from "react";
 import {
@@ -7,7 +7,7 @@ import {
   onAuthStateChanged,
   GithubAuthProvider,
 } from "firebase/auth";
-import { auth } from "./firebase";
+import { auth } from "./firebase"; // Make sure this path is correct
 
 const AuthContext = createContext();
 

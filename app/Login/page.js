@@ -9,12 +9,40 @@ export default function Login() {
 
   const handleGithubLogin = async () => {
     try {
-      await gitHubSignIn(user); // Assuming `gitHubSignIn` works without the provider object
-      router.push("/"); // Navigate to home after successful login
+      await gitHubSignIn(); // Sign in with GitHub
+      router.push("/"); // Redirect to home page after successful login
     } catch (error) {
       console.error("Error during login:", error);
     }
   };
+
+  const handleLogout = async () => {
+    try {
+      await firebaseSignOut(); // Log the user out
+      console.log("Successfully logged out");
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
+  };
+
+  // Redirect to home if user is already logged in
+  if (user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow-md">
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+            You are already logged in
+          </h2>
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 mt-4"
+          >
+            Log out
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">

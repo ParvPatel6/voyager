@@ -49,7 +49,6 @@ const BlogsPage = () => {
           transition: "all 0.3s ease",
           fontSize: "16px",
           fontWeight: "500",
-          hover: "bg-blend-darken",
           border: "1px solid rgba(0, 0, 0, 0.1)",
           cursor: "pointer",
           "&:hover": {
