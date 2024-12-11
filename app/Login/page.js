@@ -1,9 +1,10 @@
 "use client";
 
+import { Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useUserAuth } from "../_utils/auth-context";
 
-export default function Login() {
+const Login = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectPath = searchParams.get("redirect") || "/blogs";
@@ -28,7 +29,7 @@ export default function Login() {
 
   if (user) {
     return (
-      <div className="min-h-screen flex items-center justify-center ">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="bg-white shadow-lg rounded-lg p-8 max-w-md text-center">
           <h2 className="text-2xl font-semibold mb-4 text-gray-800">
             You are already logged in!
@@ -45,7 +46,7 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center ">
+    <div className="min-h-screen flex items-center justify-center">
       <div className="bg-white shadow-lg rounded-lg p-8 max-w-md w-full">
         <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
           Welcome Back
@@ -71,5 +72,13 @@ export default function Login() {
         </div>
       </div>
     </div>
+  );
+};
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Login />
+    </Suspense>
   );
 }
