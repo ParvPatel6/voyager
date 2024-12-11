@@ -1,4 +1,5 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useUserAuth } from "../../_utils/auth-context";
@@ -12,24 +13,43 @@ const NewBlog = () => {
     description: "",
     image: null,
   });
+  const [imageError, setImageError] = useState("");
 
   // Check if user is logged in
   useEffect(() => {
     if (!user) {
-      // Redirect to login with return URL for new-blog
       router.push("/Login?redirect=/blogs/new-blog");
     }
   }, [user, router]);
 
+  // Handle text input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  // Handle image file change (validate and convert to Base64)
   const handleFileChange = (e) => {
-    setFormData({ ...formData, image: e.target.files[0] });
+    const file = e.target.files[0];
+    if (file) {
+      // Check file size (1MB = 1024 * 1024 bytes)
+      if (file.size > 1024 * 1024) {
+        setImageError("Image size must be less than 1MB.");
+        setFormData({ ...formData, image: null });
+        return;
+      }
+
+      setImageError(""); // Reset error message if file size is valid
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData({ ...formData, image: reader.result }); // Set Base64 string
+      };
+      reader.readAsDataURL(file); // Convert image to Base64
+    }
   };
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -37,7 +57,7 @@ const NewBlog = () => {
       author: formData.author,
       title: formData.title,
       description: formData.description,
-      image: formData.image?.name || "", // Handle null image case
+      image: formData.image, // Send Base64 string to the backend
     };
 
     try {
@@ -132,6 +152,9 @@ const NewBlog = () => {
               onChange={handleFileChange}
               className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
             />
+            {imageError && (
+              <p className="text-red-500 text-sm mt-2">{imageError}</p>
+            )}
           </div>
 
           {/* Submit Button */}

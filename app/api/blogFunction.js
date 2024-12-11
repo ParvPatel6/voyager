@@ -1,4 +1,4 @@
-import { db } from "../_utils/firebase"; // Adjust path to your firebase.js
+import { db } from "../_utils/firebase";
 import { collection, addDoc, getDocs, doc, getDoc } from "firebase/firestore";
 
 const BLOGS_COLLECTION = "blogs";
@@ -6,14 +6,20 @@ const BLOGS_COLLECTION = "blogs";
 // Add a new blog
 export async function addBlog({ author, title, description, image }) {
   const blogRef = collection(db, BLOGS_COLLECTION);
-  const docRef = await addDoc(blogRef, {
-    author,
-    title,
-    description,
-    image,
-    createdAt: new Date(),
-  });
-  return docRef.id;
+
+  try {
+    const docRef = await addDoc(blogRef, {
+      author,
+      title,
+      description,
+      image, // Store the Base64 string in Firestore
+      createdAt: new Date(),
+    });
+    return docRef.id;
+  } catch (error) {
+    console.error("Error adding blog:", error);
+    throw new Error("Failed to add blog");
+  }
 }
 
 // Fetch all blogs

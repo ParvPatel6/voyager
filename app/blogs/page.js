@@ -69,7 +69,20 @@ const BlogsPage = () => {
                 className="block bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
               >
                 <div className="flex h-48">
-                  <div className="w-[35%] h-full bg-gray-200"></div>
+                  <div className="w-[35%] h-full bg-gray-200">
+                    {/* Displaying the image */}
+                    {blog.image ? (
+                      <img
+                        src={blog.image}
+                        alt={blog.title}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gray-300 flex items-center justify-center">
+                        <span>No Image</span>
+                      </div>
+                    )}
+                  </div>
                   <div className="w-[65%] p-4 flex flex-col justify-between">
                     <h2 className="text-xl font-bold text-gray-800 mb-2 line-clamp-2">
                       {blog.title}
