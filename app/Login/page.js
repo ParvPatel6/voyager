@@ -1,16 +1,18 @@
-"use client"; // Ensure this is present for client-side code
+"use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useUserAuth } from "../_utils/auth-context";
 
 export default function Login() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectPath = searchParams.get("redirect") || "/blogs";
   const { user, gitHubSignIn, firebaseSignOut } = useUserAuth();
 
   const handleGithubLogin = async () => {
     try {
-      await gitHubSignIn(); // Sign in with GitHub
-      router.push("/"); // Redirect to home page after successful login
+      await gitHubSignIn();
+      router.push(redirectPath);
     } catch (error) {
       console.error("Error during login:", error);
     }
@@ -18,26 +20,24 @@ export default function Login() {
 
   const handleLogout = async () => {
     try {
-      await firebaseSignOut(); // Log the user out
-      console.log("Successfully logged out");
+      await firebaseSignOut();
     } catch (error) {
       console.error("Error during logout:", error);
     }
   };
 
-  // Redirect to home if user is already logged in
   if (user) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow-md">
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            You are already logged in
+      <div className="min-h-screen flex items-center justify-center ">
+        <div className="bg-white shadow-lg rounded-lg p-8 max-w-md text-center">
+          <h2 className="text-2xl font-semibold mb-4 text-gray-800">
+            You are already logged in!
           </h2>
           <button
             onClick={handleLogout}
-            className="w-full flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 mt-4"
+            className="mt-4 px-6 py-2 text-white bg-red-600 rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-400"
           >
-            Log out
+            Log Out
           </button>
         </div>
       </div>
@@ -45,26 +45,30 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow-md">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Sign in to your account
-          </h2>
+    <div className="min-h-screen flex items-center justify-center ">
+      <div className="bg-white shadow-lg rounded-lg p-8 max-w-md w-full">
+        <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
+          Welcome Back
+        </h1>
+        <p className="text-gray-600 text-center mb-6">
+          Please log in to continue
+        </p>
+        <div className="text-center">
+          <button
+            onClick={handleGithubLogin}
+            className="w-full flex items-center justify-center px-6 py-3 text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          >
+            <svg
+              className="w-5 h-5 mr-2"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M12 0C5.373 0 0 5.373 0 12C0 17.303 3.438 21.8 8.207 23.387C8.811 23.492 9.025 23.139 9.025 22.841V20.602C5.672 21.304 4.967 19.003 4.967 19.003C4.44 17.668 3.635 17.292 3.635 17.292C2.567 16.681 3.715 16.7 3.715 16.7C4.906 16.79 5.574 17.9 5.574 17.9C6.602 19.572 8.316 19.072 9.048 18.756C9.163 18.021 9.479 17.543 9.835 17.256C7.189 16.969 4.457 15.92 4.457 11.363C4.457 10.078 4.907 9.025 5.611 8.221C5.491 7.938 5.121 6.684 5.731 5.074C5.731 5.074 6.705 4.748 8.975 6.3C9.85 6.013 10.825 5.877 11.8 5.872C12.775 5.877 13.75 6.013 14.625 6.3C16.895 4.748 17.869 5.074 17.869 5.074C18.479 6.684 18.109 7.938 17.989 8.221C18.693 9.025 19.143 10.078 19.143 11.363C19.143 15.932 16.406 16.964 13.752 17.248C14.192 17.611 14.575 18.349 14.575 19.408V22.841C14.575 23.139 14.789 23.492 15.393 23.387C20.162 21.8 23.6 17.303 23.6 12C23.6 5.373 18.227 0 12 0Z" />
+            </svg>
+            Log in with GitHub
+          </button>
         </div>
-        <button
-          onClick={handleGithubLogin}
-          className="w-full flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
-        >
-          <svg className="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-            <path
-              fillRule="evenodd"
-              d="M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0020 10.017C20 4.484 15.522 0 10 0z"
-              clipRule="evenodd"
-            />
-          </svg>
-          Sign in with GitHub
-        </button>
       </div>
     </div>
   );

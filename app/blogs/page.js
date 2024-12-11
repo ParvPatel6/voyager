@@ -41,7 +41,7 @@ const BlogsPage = () => {
           bottom: "20px",
           right: "20px",
           padding: "12px 24px",
-          backgroundColor: "#334155",
+          backgroundColor: "#94a3b8",
           color: "#000000",
           borderRadius: "8px",
           boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",

@@ -1,15 +1,25 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useUserAuth } from "../../_utils/auth-context";
 
 const NewBlog = () => {
   const router = useRouter();
+  const { user } = useUserAuth();
   const [formData, setFormData] = useState({
     author: "",
     title: "",
     description: "",
     image: null,
   });
+
+  // Check if user is logged in
+  useEffect(() => {
+    if (!user) {
+      // Redirect to login with return URL for new-blog
+      router.push("/Login?redirect=/blogs/new-blog");
+    }
+  }, [user, router]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,7 +37,7 @@ const NewBlog = () => {
       author: formData.author,
       title: formData.title,
       description: formData.description,
-      image: formData.image.name, // Assume image is handled elsewhere
+      image: formData.image?.name || "", // Handle null image case
     };
 
     try {
@@ -40,7 +50,7 @@ const NewBlog = () => {
       if (response.ok) {
         const data = await response.json();
         console.log("Blog created:", data.id);
-        router.push("/blogs"); // Redirect to blog page after successful submission
+        router.push("/blogs"); // Redirect to blogs page after successful submission
       } else {
         const errorData = await response.json();
         console.error("Error:", errorData.message);
@@ -56,8 +66,8 @@ const NewBlog = () => {
         <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
           Add New Blog
         </h1>
-
         <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Author Name */}
           <div className="relative">
             <input
               type="text"
@@ -70,12 +80,13 @@ const NewBlog = () => {
             />
             <label
               htmlFor="author"
-              className="absolute  text-sm font-medium text-gray-500 top-0 left-2 -translate-y-1/2 bg-white px-1"
+              className="absolute text-sm font-medium text-gray-500 top-0 left-2 -translate-y-1/2 bg-white px-1"
             >
               Author Name
             </label>
           </div>
 
+          {/* Title */}
           <div className="relative">
             <input
               type="text"
@@ -94,6 +105,7 @@ const NewBlog = () => {
             </label>
           </div>
 
+          {/* Description */}
           <div className="relative">
             <textarea
               name="description"
@@ -112,6 +124,7 @@ const NewBlog = () => {
             </label>
           </div>
 
+          {/* File Upload */}
           <div className="mt-4">
             <input
               type="file"
@@ -121,6 +134,7 @@ const NewBlog = () => {
             />
           </div>
 
+          {/* Submit Button */}
           <button
             type="submit"
             className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
