@@ -66,7 +66,7 @@ const BlogsPage = () => {
             <li key={blog.id} className="w-full mb-6">
               <Link
                 href={`/blogs/${blog.id}`}
-                className="block bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
+                className="block bg-white rounded-lg shadow-md hover:shadow-2xl transition duration-300 transform hover:-translate-y-2"
               >
                 <div className="flex h-48">
                   <div className="w-[35%] h-full bg-gray-200">
@@ -84,7 +84,7 @@ const BlogsPage = () => {
                     )}
                   </div>
                   <div className="w-[65%] p-4 flex flex-col justify-between">
-                    <h2 className="text-xl font-bold text-gray-800 mb-2 line-clamp-2">
+                    <h2 className="text-xl font-bold text-gray-800 mb-2 line-clamp-2 ">
                       {blog.title}
                     </h2>
                     <p className="text-sm text-gray-600">By {blog.author}</p>
