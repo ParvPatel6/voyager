@@ -34,6 +34,7 @@ const BlogsPage = () => {
   return (
     <div>
       <h1>Blogs</h1>
+      {/* Add New Blog Button */}
       <Link
         href="/blogs/new-blog"
         style={{
@@ -51,10 +52,7 @@ const BlogsPage = () => {
           fontWeight: "500",
           border: "1px solid rgba(0, 0, 0, 0.1)",
           cursor: "pointer",
-          "&:hover": {
-            transform: "translateY(-2px)",
-            boxShadow: "0 6px 16px rgba(0, 0, 0, 0.2)",
-          },
+          zIndex: 1000, // Ensure the button appears above other elements
         }}
       >
         Add New Blog
@@ -66,7 +64,7 @@ const BlogsPage = () => {
             <li key={blog.id} className="w-full mb-6">
               <Link
                 href={`/blogs/${blog.id}`}
-                className="block bg-white rounded-lg shadow-md hover:shadow-2xl transition duration-300 transform hover:-translate-y-2"
+                className="block bg-white rounded-lg shadow-md overflow-hidden hover:shadow-2xl transition duration-300 transform hover:-translate-y-2"
               >
                 <div className="flex h-48">
                   <div className="w-[35%] h-full bg-gray-200">
@@ -84,7 +82,7 @@ const BlogsPage = () => {
                     )}
                   </div>
                   <div className="w-[65%] p-4 flex flex-col justify-between">
-                    <h2 className="text-xl font-bold text-gray-800 mb-2 line-clamp-2 ">
+                    <h2 className="text-xl font-bold text-gray-800 mb-2 line-clamp-2">
                       {blog.title}
                     </h2>
                     <p className="text-sm text-gray-600">By {blog.author}</p>
