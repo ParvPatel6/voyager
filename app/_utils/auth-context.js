@@ -1,4 +1,4 @@
-"use client"; // Ensure this is present for client-side code
+"use client";
 
 import { useContext, createContext, useState, useEffect } from "react";
 import {
@@ -6,8 +6,9 @@ import {
   signOut,
   onAuthStateChanged,
   GithubAuthProvider,
+  GoogleAuthProvider,
 } from "firebase/auth";
-import { auth } from "./firebase"; // Make sure this path is correct
+import { auth } from "./firebase";
 
 const AuthContext = createContext();
 
@@ -16,6 +17,11 @@ export const AuthContextProvider = ({ children }) => {
 
   const gitHubSignIn = () => {
     const provider = new GithubAuthProvider();
+    return signInWithPopup(auth, provider);
+  };
+  // add google sign in
+  const googleSignIn = () => {
+    const provider = new GoogleAuthProvider();
     return signInWithPopup(auth, provider);
   };
 
@@ -32,7 +38,9 @@ export const AuthContextProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, gitHubSignIn, firebaseSignOut }}>
+    <AuthContext.Provider
+      value={{ user, gitHubSignIn, googleSignIn, firebaseSignOut }}
+    >
       {children}
     </AuthContext.Provider>
   );
